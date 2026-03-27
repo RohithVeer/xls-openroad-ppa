@@ -93,30 +93,6 @@ make DESIGN_CONFIG=./designs/nangate45/gcd/config.mk
 
 ------------------------------------
 
-
--------------------------------------
-## GTKwave Results
-
-<img width="1520" height="729" alt="Screenshot 2026-03-27 125134" src="https://github.com/user-attachments/assets/99fb961e-5f17-4954-a05e-11421c982f2a" />
-
--------------------------------------
-##  RTL → GDS PPA Comparison
-
-| Metric | Baseline Design | Systolic MatMul | Unrolled MatMul |
-|--------|---------------|----------------|----------------|
-| WNS (ns) | -0.05 | 0.00 | 0.00 |
-| TNS (ns) | -0.73 | 0.00 | 0.00 |
-| Worst Slack (ns) | — | +3.55 | +3.63 |
-| Critical Path (ns) | 0.4138 | — | — |
-| Max Frequency (MHz) | ~1977 | ~200 | ~200 |
-| Sequential Power (W) | 0.000605 | 0.00081 | 0.00000 |
-| Combinational Power (W) | 0.00283 | 0.0129 | 0.00375 |
-| Clock Power (W) | 0.000303 | 0.000152 | 0.00000 |
-| **Total Power** | **3.74 mW** | **13.9 mW** | **3.75 mW** |
-| **Area (µm²)** | — | **8694** | **3629** |
-
-------------------------------------
-
 ##  Observations
 
 - The baseline design shows timing violations (negative WNS/TNS), while both systolic and unrolled architectures achieve full timing closure.
