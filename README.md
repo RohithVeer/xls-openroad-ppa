@@ -29,17 +29,17 @@ gtkwave wave.vcd
 ## Run OpenROAD Flow
 
 ```
-Baseline
+# Baseline
 
 cd OpenROAD-flow-scripts/flow
 make DESIGN_CONFIG=./designs/nangate45/gcd/config.mk
 
-Systolic Matrix Multiplication
+# Systolic Matrix Multiplication
 
 cd OpenROAD-flow-scripts/flow
 make DESIGN_CONFIG=./designs/nangate45/matmul_systolic/config.mk
 
-Unrolled Matrix Multiplication
+# Unrolled Matrix Multiplication
 
 cd OpenROAD-flow-scripts/flow
 make DESIGN_CONFIG=./designs/nangate45/matmul_unrolled/config.mk
