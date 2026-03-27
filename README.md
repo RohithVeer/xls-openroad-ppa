@@ -46,7 +46,20 @@ make DESIGN_CONFIG=./designs/nangate45/gcd/config.mk
 
 ------------------------------
 ## Results
- 
+
+ ##  Repository Artifacts
+
+### Reports
+- reports/matmul_systolic/6_finish.rpt
+- reports/matmul_unrolled/6_finish.rpt
+
+### Final Layout (GDS)
+- results/matmul_systolic/6_final.gds
+- results/matmul_unrolled/6_final.gds
+
+These files enable reproducibility and verification of the reported PPA metrics.
+-----------------------------------------------------------------------------------
+
 ### Simulation Output
 
 1. C00 = 19
