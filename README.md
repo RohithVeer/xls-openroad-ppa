@@ -55,55 +55,101 @@ make DESIGN_CONFIG=./designs/nangate45/gcd/config.mk
 4. C11 = 50
    
 -----------------------------
+
+## RTl-GSDII Results
+
+## Baseline Design
+
+<img width="1536" height="766" alt="Screenshot 2026-03-27 120918" src="https://github.com/user-attachments/assets/028d669a-8480-4174-9628-a568908340fc" />
+
+## Matmul_Systolic
+
+<img width="1530" height="771" alt="Screenshot 2026-03-27 190911" src="https://github.com/user-attachments/assets/6e9efd5a-3757-4d23-98f5-27e364aa700d" />
+
+## Matmul_Unrolled
+
+<img width="1541" height="780" alt="Screenshot 2026-03-27 190954" src="https://github.com/user-attachments/assets/3fd60737-74d5-4c05-bc0a-83b607b93fb9" />
+
+-------------------------------------
 ## GTKwave Results
 
 <img width="1520" height="729" alt="Screenshot 2026-03-27 125134" src="https://github.com/user-attachments/assets/99fb961e-5f17-4954-a05e-11421c982f2a" />
 
 -------------------------------------
-### PPA Metrics
+##  RTL → GDS PPA Comparison
 
-1. Timing
-2. WNS: -0.05 ns
-3. TNS: -0.73 ns
-4. Critical Path: 0.4138 ns
-5. Max Frequency: ~1977 MHz
-   
- --------------------------
- 
-### Power
-
-1. Sequential: 0.000605 W
-2. Combinational: 0.00283 W
-3. Clock: 0.000303 W
-4. Total: 3.74 mW
+| Metric | Baseline Design | Systolic MatMul | Unrolled MatMul |
+|--------|---------------|----------------|----------------|
+| WNS (ns) | -0.05 | 0.00 | 0.00 |
+| TNS (ns) | -0.73 | 0.00 | 0.00 |
+| Worst Slack (ns) | — | +3.55 | +3.63 |
+| Critical Path (ns) | 0.4138 | — | — |
+| Max Frequency (MHz) | ~1977 | ~200 | ~200 |
+| Sequential Power (W) | 0.000605 | 0.00081 | 0.00000 |
+| Combinational Power (W) | 0.00283 | 0.0129 | 0.00375 |
+| Clock Power (W) | 0.000303 | 0.000152 | 0.00000 |
+| **Total Power** | **3.74 mW** | **13.9 mW** | **3.75 mW** |
+| **Area (µm²)** | — | **8694** | **3629** |
 
 ------------------------------------
+
+
+-------------------------------------
+## GTKwave Results
+
+<img width="1520" height="729" alt="Screenshot 2026-03-27 125134" src="https://github.com/user-attachments/assets/99fb961e-5f17-4954-a05e-11421c982f2a" />
+
+-------------------------------------
+##  RTL → GDS PPA Comparison
+
+| Metric | Baseline Design | Systolic MatMul | Unrolled MatMul |
+|--------|---------------|----------------|----------------|
+| WNS (ns) | -0.05 | 0.00 | 0.00 |
+| TNS (ns) | -0.73 | 0.00 | 0.00 |
+| Worst Slack (ns) | — | +3.55 | +3.63 |
+| Critical Path (ns) | 0.4138 | — | — |
+| Max Frequency (MHz) | ~1977 | ~200 | ~200 |
+| Sequential Power (W) | 0.000605 | 0.00081 | 0.00000 |
+| Combinational Power (W) | 0.00283 | 0.0129 | 0.00375 |
+| Clock Power (W) | 0.000303 | 0.000152 | 0.00000 |
+| **Total Power** | **3.74 mW** | **13.9 mW** | **3.75 mW** |
+| **Area (µm²)** | — | **8694** | **3629** |
+
+------------------------------------
+
+##  Observations
+
+- The baseline design shows timing violations (negative WNS/TNS), while both systolic and unrolled architectures achieve full timing closure.
+- The systolic design consumes higher power due to increased data movement and structured pipeline execution.
+- The unrolled design is more area and power-efficient for small matrix sizes.
+- The systolic architecture is expected to scale better for larger matrix dimensions
+
+  ----------------------------------------------
 ### Area
 
-1. Standard-cell implementation using Nangate45 library
-2. Extracted post-placement and routing
+- Standard cell implementation using Nangate45 library.
+- Extracted from post placement and routing reports.
 
 ------------------------------------------
 ## Analysis
 
-1. Near timing closure with minor violations
-2. Power dominated by combinational logic (~75%)
-3. Successful placement, routing, and CTS
-4. Clean GDSII with no critical DRC violations
+- Baseline design shows timing violations, while both systolic and unrolled architectures achieve full timing closure.
+- Power is dominated by combinational logic due to  intensive MAC operations.
+- Clean GDSII generation with no critical DRC violations.
 
 -----------------------------------------------------
 ### Challenges
 
-1. Resolving OpenROAD dependency issues
-2. Debugging post-CTS timing violations
-3. Ensuring correct simulation setup
-4. Integrating RTL with physical design flow
+- Resolving OpenROAD dependency issues.
+- Debugging timing violations after clock tree synthesis.
+- Ensuring correct simulation setup and waveform validation.
+- integrating RTL with full physical design flow
 
  ---------------------------------------------------------
 
 ### Conclusion
 
-This project provides a practical foundation for understanding RTL-to-GDS ASIC design using open-source tools and highlights real-world trade-offs between performance, power, and area.
+This project demonstrates a complete RTL-GDSII implementation using open-source tools and highlights trade-offs between performance, power, and area across different hardware architectures
 
  ----------------------------------------------------------
 ### Acknowledgements
@@ -112,3 +158,4 @@ This project provides a practical foundation for understanding RTL-to-GDS ASIC d
 - [Xinting Jiang](https://www.linkedin.com/in/xinting-jiang-74a42b28b/)
 
   
+
