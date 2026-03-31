@@ -1,4 +1,5 @@
 ## XLS → OpenROAD PPA GSOC-2026
+COPPER -Compiler-driven Optimization for PPA-aware Physical Design and RTL
 -----
 
 ## Description
