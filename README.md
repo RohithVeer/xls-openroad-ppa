@@ -1,4 +1,4 @@
-## XLS → OpenROAD PPA Exploration
+## XLS → OpenROAD PPA GSOC-2026
 -----
 
 ## Description
