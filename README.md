@@ -148,11 +148,137 @@ These files enable reproducibility and verification of the reported PPA metrics.
 
  ---------------------------------------------------------
 
-### Conclusion
+### Task Conclusion
 
 This project demonstrates a complete RTL-GDSII implementation using open-source tools and highlights trade-offs between performance, power, and area across different hardware architectures
 
  ----------------------------------------------------------
+
+ ## PROPOSAL FOR GSOC-2026
+ 
+ ##  Description
+
+This project demonstrates a **complete RTL-to-GDSII ASIC design flow** using the OpenROAD toolchain. It focuses on evaluating **Performance, Power, and Area (PPA)** for matrix multiplication (MatMul) architectures.
+
+The work extends to integrate:
+
+- XLS (High-level hardware compiler)
+- MatMul accelerator architectures
+- OpenROAD (physical design feedback)
+
+to enable **PPA-aware hardware generation**.
+
+--------------------------------------------------------------
+
+## Current Progress VS Target Contribution
+
+| S No |            Parameter	 |        Work Completed	            |    Proposal	                   |      Contribution                            |
+|------|----------------------------|--------------------------------------|----------------------------------|----------------------------------------------|
+|  1	|       OpenROAD Flow	 |      Full RTL-to-GDS execution       | No Automation is implemented     |  Build automated evaluation pipeline         |
+|  2	|       Matmul Architecture	 |     Unrolled and Systolic analyzed.  | Not integrated with compiler.    |  Encode an lowering strategies in XLS        |
+|  3	|      PPA understanding	 |     Qualitative + Layout proof	     | No quantitative dataset	     |  Build structured PPA benchmarking           |
+|  4	|      RTL generation	 |     Manual Verilog	            | Not scalable	                   |  Auto generate via XLS                       |
+|  5	|       Physical feedback	 |     Observed manually	            | No feedback loop	            | Close loop into compiler decisions           |
+|  6	|       Compiler             |     Integration Not implemented	     | Core missing piece	            |  Extend XLS IR and backend                   |
+
+------------------------------------------------------------------
+
+## Detailed Goals, Deliverables, and Execution Plan
+### a.Compiler level contributions (XLS)
+
+| Goal | Description                        | Deliverable                 | Methodology                   | Outcome                         |
+| ---- | ---------------------------------- | --------------------------- | ----------------------------- | ------------------------------- |
+| 1    | Introduction to MatMul abstraction | XLS IR extension PR         | Add tensor-level operation    | ML-native compilation           |
+| 2    | Support parameterized MatMul       | Configurable dimensions     | Extend IR and lowering        | Flexible accelerator generation |
+| 3    | Enable architecture lowering       | Multiple backend strategies | Strategy selector in compiler | Architecture exploration        |
+
+--------------------------------------
+
+### b.RTL Generation
+
+| S No | Strategy | Description            | Implementation          | Expected Hardware Behavior | PPA Impact            |
+| ---- | -------- | ---------------------- | ----------------------- | -------------------------- | --------------------- |
+| 1    | Unrolled | Fully parallel compute | Combinational datapath  | 1-cycle latency            | High area, congestion |
+| 2    | MAC Tree | Pipelined reduction    | Balanced adder tree     | Moderate latency           | Improved timing       |
+| 3    | Systolic | PE grid with dataflow  | 2D array with registers | Streaming computation      | Best scalability      |
+
+---------------------------------------
+
+### c.Open ROAD Integration
+
+| Goal | Description              | Deliverable              | Tools               | Outcome              |
+| ---- | ------------------------ | ------------------------ | ------------------- | -------------------- |
+| 1    | Automate RTL → GDS flow  | Scripted pipeline        | OpenROAD, TCL       | Batch processing     |
+| 2    | Standard evaluation      | Unified config templates | Flow configurations | Reproducibility      |
+| 3    | Enable multi-design runs | Architecture sweeps      | Python automation   | Comparative analysis |
+
+-----------------------------------------------
+
+### d.PPA Framework
+
+| S No | Parameter   | Source                | Extraction Method    | Purpose              |
+| ---- | ----------- | --------------------- | -------------------- | -------------------- |
+| 1    | WNS         | STA reports           | Parse STA output     | Timing quality       |
+| 2    | TNS         | STA reports           | Aggregate violations | Stability            |
+| 3    | Area        | Synthesis / Placement | Report parsing       | Resource usage       |
+| 4    | Power       | Estimation reports    | Tool extraction      | Efficiency           |
+| 5    | Routability | Routing logs          | Congestion metrics   | Physical feasibility |
+
+---------------------------------------
+
+## Contribution
+
+| S No | Feature               | Task Submitted          | GSoC Proposal                        |
+| ---- | --------------------- | ----------------------- | ------------------------------------ |
+| 1    | OpenROAD Usage        | Flow execution          | Feedback-driven engine               |
+| 2    | XLS Extension         | Basic operator addition | Architecture-aware lowering system   |
+| 3    | MatMul Implementation | Single design           | Multiple competing architectures     |
+| 4    | PPA Analysis          | Static comparison       | Dynamic compiler-driven optimization |
+| 5    | Flow                  | Linear                  | Closed-loop system                   |
+
+---------------------------------------------------------
+
+## End-to-End Framework
+
+<img width="462" height="836" alt="image" src="https://github.com/user-attachments/assets/6e3cb83d-ac57-4595-b022-f96b9d44445e" />
+
+-------------------------------
+
+## Expected Deliverables
+
+| S No | Deliverable               | Description                | Validation         |
+| ---- | ------------------------- | -------------------------- | ------------------ |
+| 1    | XLS PR (MatMul Operator)  | ML-native abstraction      | Accepted upstream  |
+| 2    | RTL Generation Framework  | Multi-architecture backend | Synthesizable RTL  |
+| 3    | OpenROAD Integration Flow | Automated pipeline         | Successful GDS     |
+| 4    | PPA Dataset               | Comparative results        | Measurable metrics |
+| 5    | Optimization Engine       | Heuristic-based selection  | Improved PPA       |
+| 6    | Documentation             | Full methodology           | Reproducibility    |
+| 7    | Final Demonstration       | End-to-end pipeline        | Working prototype  |
+
+ ------------------------------------------------
+
+ ## Expected Outcomes
+
+| S No | Description                                                 |
+| ---- | ----------------------------------------------------------- |
+| 1    | First step toward ML-aware hardware compilation in XLS      |
+| 2    | Demonstration of compiler + physical design co-optimization |
+| 3    | Open-source framework for AI accelerator development        |
+| 4    | Insight into architecture vs physical design trade-offs     |
+| 5    | Reproducible research pipeline for future extensions        |
+
+-----------------------------------------------------
+
+## Conclusion
+
+This proposal is implementing isolated components and instead delivers a unified, feedback-driven hardware generation system, where:
+- Physical design realities guide compiler decisions 
+- Architectural choices are validated through real silicon metrics 
+- Open-source tools are combined into a reproducible research pipeline
+
+------------------------------------------------------------
+
 ### Acknowledgements
 
 - [Mehdi Saligane](https://github.com/msaligane)
